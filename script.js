@@ -1,6 +1,3 @@
-// Import Web3 library
-import Web3 from 'web3';
-
 // Initialize Web3
 const web3 = new Web3(window.ethereum);
 
