@@ -131,28 +131,36 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Add event listener to the grid cells (except the connect button)
-    const gridCells = document.querySelectorAll('.grid-item:not(#cell-5)');
-    gridCells.forEach(cell => {
-        cell.addEventListener('click', async function() {
-            // Check if connected
-            if (!web3) {
-                alert('Please connect your wallet first.');
-                return;
-            }
+const gridCells = document.querySelectorAll('.grid-item:not(#cell-5)');
+gridCells.forEach(cell => {
+    cell.addEventListener('click', async function() {
+        // Check if connected
+        if (!web3) {
+            alert('Please connect your wallet first.');
+            return;
+        }
 
-            // Purchase space
-            try {
-                await contract.methods.purchaseSpace().send({
-                    from: web3.eth.defaultAccount,
-                    value: web3.utils.toWei('0.01', 'ether')
-                });
-                alert('Space purchased successfully!');
-            } catch (error) {
-                console.error('Error purchasing space:', error);
-                alert('Error purchasing space. Please try again later.');
-            }
-        });
+        // Purchase space
+        try {
+            // Ensure default account is set
+            await web3.eth.requestAccounts();
+
+            // Get the default account
+            const defaultAccount = (await web3.eth.getAccounts())[0];
+
+            // Send transaction
+            await contract.methods.purchaseSpace().send({
+                from: defaultAccount,
+                value: web3.utils.toWei('0.01', 'ether')
+            });
+            alert('Space purchased successfully!');
+        } catch (error) {
+            console.error('Error purchasing space:', error);
+            alert('Error purchasing space. Please try again later.');
+        }
     });
+});
+
 
     // Function to check connection status and update indicator
     async function checkConnectionStatus() {
