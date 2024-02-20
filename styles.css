@@ -13,3 +13,25 @@
     font-size: 24px;
   }
   
+/* Add styles for status indicator */
+.status-indicator {
+  margin-top: 20px;
+}
+
+.dot {
+  height: 10px;
+  width: 10px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 5px;
+}
+
+/* Red dot */
+.dot.red {
+  background-color: red;
+}
+
+/* Green dot */
+.dot.green {
+  background-color: green;
+}
